@@ -8,10 +8,7 @@ import (
 
 func main() {
 	r := gin.Default()
-
-	routes.SetupRoutes(r)
-
 	config.ConnectDatabase()
-
+	routes.SetupRoutes(r)
 	r.Run(":8080")
 }

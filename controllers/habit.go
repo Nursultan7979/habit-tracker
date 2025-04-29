@@ -13,23 +13,48 @@ func CreateHabit(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	config.DB.Create(&habit)
+
+	userID, exists := c.Get("userID")
+	if !exists {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "Пользователь не авторизован"})
+		return
+	}
+
+	habit.UserID = userID.(uint)
+	if err := config.DB.Create(&habit).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
 	c.JSON(http.StatusOK, habit)
 }
 
 func GetHabits(c *gin.Context) {
+	userID, exists := c.Get("userID")
+	if !exists {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "Пользователь не авторизован"})
+		return
+	}
+
 	var habits []models.Habit
-	if err := config.DB.Find(&habits).Error; err != nil {
+	if err := config.DB.Where("user_id = ?", userID).Find(&habits).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
+
 	c.JSON(http.StatusOK, habits)
 }
 
 func UpdateHabit(c *gin.Context) {
+	userID, exists := c.Get("userID")
+	if !exists {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "Пользователь не авторизован"})
+		return
+	}
+
 	var habit models.Habit
-	if err := config.DB.Where("id = ?", c.Param("id")).First(&habit).Error; err != nil {
-		c.JSON(http.StatusNotFound, gin.H{"error": "Привычка не найдена"})
+	if err := config.DB.Where("id = ? AND user_id = ?", c.Param("id"), userID).First(&habit).Error; err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "Привычка не найдена или не принадлежит вам"})
 		return
 	}
 
@@ -38,14 +63,25 @@ func UpdateHabit(c *gin.Context) {
 		return
 	}
 
-	config.DB.Save(&habit)
+	if err := config.DB.Save(&habit).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
 	c.JSON(http.StatusOK, habit)
 }
 
 func DeleteHabit(c *gin.Context) {
-	if err := config.DB.Where("id = ?", c.Param("id")).Delete(&models.Habit{}).Error; err != nil {
-		c.JSON(http.StatusNotFound, gin.H{"error": "Привычка не найдена"})
+	userID, exists := c.Get("userID")
+	if !exists {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "Пользователь не авторизован"})
 		return
 	}
+
+	if err := config.DB.Where("id = ? AND user_id = ?", c.Param("id"), userID).Delete(&models.Habit{}).Error; err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "Привычка не найдена или не принадлежит вам"})
+		return
+	}
+
 	c.JSON(http.StatusOK, gin.H{"message": "Привычка удалена"})
 }
