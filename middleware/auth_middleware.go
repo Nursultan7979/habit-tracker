@@ -3,6 +3,8 @@ package middleware
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v5"
+	"habit_tracker/config"
+	"habit_tracker/models"
 	"net/http"
 	"strings"
 )
@@ -39,6 +41,26 @@ func AuthMiddleware(c *gin.Context) {
 		return
 	}
 
-	c.Set("userID", claims.UserID)
+	var user models.User
+	if err := config.DB.First(&user, claims.UserID).Error; err != nil {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "Пользователь не найден"})
+		c.Abort()
+		return
+	}
+
+	c.Set("userID", user.ID)
+	c.Set("role", user.Role)
 	c.Next()
+}
+
+func RequireRole(role string) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		userRole, exists := c.Get("role")
+		if !exists || userRole != role {
+			c.JSON(http.StatusForbidden, gin.H{"error": "Доступ запрещён: недостаточно прав"})
+			c.Abort()
+			return
+		}
+		c.Next()
+	}
 }

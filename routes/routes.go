@@ -21,9 +21,26 @@ func SetupRoutes(router *gin.Engine) {
 	auth.GET("/habits", controllers.GetHabits)
 	auth.PUT("/habits/:id", controllers.UpdateHabit)
 	auth.DELETE("/habits/:id", controllers.DeleteHabit)
-	
+
 	auth.POST("/habit-logs", controllers.CreateHabitLog)
 	auth.GET("/habit-logs", controllers.GetHabitLogs)
 	auth.PUT("/habit-logs/:id", controllers.UpdateHabitLog)
 	auth.DELETE("/habit-logs/:id", controllers.DeleteHabitLog)
+
+	admin := router.Group("/api/admin")
+	admin.Use(middleware.AuthMiddleware)
+	admin.Use(middleware.RequireRole("admin"))
+
+	admin.GET("/users", controllers.GetUsers)
+	admin.PUT("/users/:id", controllers.UpdateUserByAdmin)
+	admin.DELETE("/users/:id", controllers.DeleteUserByAdmin)
+	admin.POST("/users", controllers.CreateUserByAdmin)
+
+	admin.GET("/habits", controllers.GetAllHabits)
+	admin.PUT("/habits/:id", controllers.UpdateHabitByAdmin)
+	admin.DELETE("/habits/:id", controllers.DeleteHabitByAdmin)
+
+	admin.GET("/habit-logs", controllers.GetAllHabitLogs)
+	admin.PUT("/habit-logs/:id", controllers.UpdateHabitLogByAdmin)
+	admin.DELETE("/habit-logs/:id", controllers.DeleteHabitLogByAdmin)
 }
