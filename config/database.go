@@ -2,23 +2,43 @@ package config
 
 import (
 	"fmt"
+	"os"
+	"time"
+
+	"habit_tracker/models"
+
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
-	"habit_tracker/models"
 )
 
 var DB *gorm.DB
 
 func ConnectDatabase() {
 	var err error
-	dsn := "user=postgres password=123456kz dbname=habit_tracker port=5432 sslmode=disable"
-	DB, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
-	if err != nil {
-		fmt.Println("Ошибка подключения к базе данных: ", err)
-		return
+	dsn := fmt.Sprintf(
+		"host=%s user=%s password=%s dbname=%s port=%s sslmode=disable TimeZone=Asia/Almaty",
+		os.Getenv("DB_HOST"),
+		os.Getenv("DB_USER"),
+		os.Getenv("DB_PASSWORD"),
+		os.Getenv("DB_NAME"),
+		os.Getenv("DB_PORT"),
+	)
+
+	for i := 0; i < 10; i++ {
+		DB, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
+		if err == nil {
+			break
+		}
+		fmt.Println("Retrying to connect to DB in 3 seconds...")
+		time.Sleep(3 * time.Second)
 	}
 
-	fmt.Println("Успешно подключено к базе данных")
+	if err != nil {
+		panic("Failed to connect to database: " + err.Error())
+	}
 
-	DB.AutoMigrate(&models.User{}, &models.Habit{}, &models.HabitLog{})
+	err = DB.AutoMigrate(&models.User{}, &models.Habit{}, &models.HabitLog{})
+	if err != nil {
+		panic("Failed to migrate database: " + err.Error())
+	}
 }
