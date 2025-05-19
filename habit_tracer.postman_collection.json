@@ -1,0 +1,767 @@
+{
+	"info": {
+		"_postman_id": "5d7efb72-cfe5-4ee5-ae10-361cf0200248",
+		"name": "habit_tracer",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "33490904"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const json = pm.response.json();\r",
+							"pm.environment.set(\"authToken\", json.token);\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"email\": \"nurs@gmail.com\",\r\n  \"password\": \"nurs006\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Register",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"Nursultan\",\r\n  \"email\": \"nurs@gmail.com\",\r\n  \"password\": \"sadu0102\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "профиль",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySUQiOjQsImV4cCI6MTc0NjAxNzA5NH0.N7nYBV3C_pCvVADVb6V4Nf4zWvgzW4xeAEs-7TXizBk",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/api/profile",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"profile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Обновить профиль",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySUQiOjQsImV4cCI6MTc0NjAxNzA5NH0.N7nYBV3C_pCvVADVb6V4Nf4zWvgzW4xeAEs-7TXizBk",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"Shakarim\",\r\n  \"email\": \"shakarim@gmail.com\",\r\n  \"password\": \"shakarim006\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/profile",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"profile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Удалить профиль",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySUQiOjQsImV4cCI6MTc0NjAxNzA5NH0.N7nYBV3C_pCvVADVb6V4Nf4zWvgzW4xeAEs-7TXizBk",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/api/profile",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"profile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Создать привычку",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySUQiOjQsImV4cCI6MTc0NjAxNzA5NH0.N7nYBV3C_pCvVADVb6V4Nf4zWvgzW4xeAEs-7TXizBk",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"title\": \"Чтение\",\r\n  \"description\": \"Абай жолы\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/habits",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"habits"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Получить список привычек",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySUQiOjQsImV4cCI6MTc0NjAxNzA5NH0.N7nYBV3C_pCvVADVb6V4Nf4zWvgzW4xeAEs-7TXizBk",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/api/habits",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"habits"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Обновить привычку",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySUQiOjUsImV4cCI6MTc0NjA3MTQ5NX0.r4q5mGNcvEdD4PxgGxJEYh08qcJuoU09XsCocvBl6nA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySUQiOjQsImV4cCI6MTc0NjAxNzA5NH0.N7nYBV3C_pCvVADVb6V4Nf4zWvgzW4xeAEs-7TXizBk",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"title\": \"Чтение книг\",\r\n  \"description\": \"Қартқожа\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/habits/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"habits",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Удалить привычку",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySUQiOjQsImV4cCI6MTc0NjAxNzA5NH0.N7nYBV3C_pCvVADVb6V4Nf4zWvgzW4xeAEs-7TXizBk",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/api/habits/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"habits",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Создать лог привычки",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySUQiOjQsImV4cCI6MTc0NjAxNzA5NH0.N7nYBV3C_pCvVADVb6V4Nf4zWvgzW4xeAEs-7TXizBk",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"habit_id\": 1,\r\n  \"date\": \"2025-04-29\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/habit-logs",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"habit-logs"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Получить логи привычек",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySUQiOjQsImV4cCI6MTc0NjAxNzA5NH0.N7nYBV3C_pCvVADVb6V4Nf4zWvgzW4xeAEs-7TXizBk",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/api/habit-logs",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"habit-logs"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Обновить лог привычки",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySUQiOjUsImV4cCI6MTc0NjA3MTQ5NX0.r4q5mGNcvEdD4PxgGxJEYh08qcJuoU09XsCocvBl6nA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySUQiOjQsImV4cCI6MTc0NjAxNzA5NH0.N7nYBV3C_pCvVADVb6V4Nf4zWvgzW4xeAEs-7TXizBk",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"habit_id\": 2,\r\n  \"date\": \"2025-05-15\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/habit-logs/5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"habit-logs",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": " Удалить лог привычки",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySUQiOjQsImV4cCI6MTc0NjAxNzA5NH0.N7nYBV3C_pCvVADVb6V4Nf4zWvgzW4xeAEs-7TXizBk",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/api/habit-logs/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"habit-logs",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get users Admin",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySUQiOjMsImV4cCI6MTc0NjA0MTAxMH0.uRfKoDtTC5Rc7Axfu0XBpPKExXdYO_BZ4_hnRR-dxME",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/api/admin/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"admin",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Обновление пользователя (админ)",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySUQiOjMsImV4cCI6MTc0NjA0MTAxMH0.uRfKoDtTC5Rc7Axfu0XBpPKExXdYO_BZ4_hnRR-dxME",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"Aizhan\",\r\n  \"email\": \"aiz@gmail.com\",\r\n  \"role\": \"admin\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/admin/users/6",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"admin",
+						"users",
+						"6"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": " Удаление пользователя (админ)",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySUQiOjMsImV4cCI6MTc0NjA0MTAxMH0.uRfKoDtTC5Rc7Axfu0XBpPKExXdYO_BZ4_hnRR-dxME",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/admin/users/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"admin",
+						"users",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": " Создание пользователя (админ)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySUQiOjMsImV4cCI6MTc0NjA0MTAxMH0.uRfKoDtTC5Rc7Axfu0XBpPKExXdYO_BZ4_hnRR-dxME",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"New User\",\r\n  \"email\": \"newuser@example.com\",\r\n  \"password\": \"password123\",\r\n  \"role\": \"user\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/admin/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"admin",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Получение всех привычек (админ)",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySUQiOjMsImV4cCI6MTc0NjA0MTAxMH0.uRfKoDtTC5Rc7Axfu0XBpPKExXdYO_BZ4_hnRR-dxME",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/api/admin/habits",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"admin",
+						"habits"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Обновление привычки (админ)",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySUQiOjMsImV4cCI6MTc0NjA0MTAxMH0.uRfKoDtTC5Rc7Axfu0XBpPKExXdYO_BZ4_hnRR-dxME",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"title\": \"Drink Water\",\r\n  \"description\": \"2 litr\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/admin/habits/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"admin",
+						"habits",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Удаление привычки (админ)",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySUQiOjMsImV4cCI6MTc0NjA0MTAxMH0.uRfKoDtTC5Rc7Axfu0XBpPKExXdYO_BZ4_hnRR-dxME",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/api/admin/habits/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"admin",
+						"habits",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Получение всех записей о привычках (админ)",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySUQiOjMsImV4cCI6MTc0NjA0MTAxMH0.uRfKoDtTC5Rc7Axfu0XBpPKExXdYO_BZ4_hnRR-dxME",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/api/admin/habit-logs",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"admin",
+						"habit-logs"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Обновление записи о привычке (админ)",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySUQiOjMsImV4cCI6MTc0NjA0MTAxMH0.uRfKoDtTC5Rc7Axfu0XBpPKExXdYO_BZ4_hnRR-dxME",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"habit_id\": 4,\r\n  \"date\": \"2025-05-01\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/admin/habit-logs/7",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"admin",
+						"habit-logs",
+						"7"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Удаление записи о привычке (админ)",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySUQiOjMsImV4cCI6MTc0NjA0MTAxMH0.uRfKoDtTC5Rc7Axfu0XBpPKExXdYO_BZ4_hnRR-dxME",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/api/admin/habit-logs/7",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"admin",
+						"habit-logs",
+						"7"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
