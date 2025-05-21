@@ -78,7 +78,13 @@ func DeleteHabit(c *gin.Context) {
 		return
 	}
 
-	if err := config.DB.Where("id = ? AND user_id = ?", c.Param("id"), userID).Delete(&models.Habit{}).Error; err != nil {
+	result := config.DB.Where("id = ? AND user_id = ?", c.Param("id"), userID).Delete(&models.Habit{})
+	if result.Error != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Ошибка при удалении привычки"})
+		return
+	}
+
+	if result.RowsAffected == 0 {
 		c.JSON(http.StatusNotFound, gin.H{"error": "Привычка не найдена или не принадлежит вам"})
 		return
 	}
@@ -123,8 +129,15 @@ func UpdateHabitByAdmin(c *gin.Context) {
 
 func DeleteHabitByAdmin(c *gin.Context) {
 	id := c.Param("id")
-	if err := config.DB.Delete(&models.Habit{}, id).Error; err != nil {
-		c.JSON(http.StatusNotFound, gin.H{"error": "Привычка не найдена"})
+
+	result := config.DB.Delete(&models.Habit{}, id)
+	if result.Error != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Ошибка при удалении привычки"})
+		return
+	}
+
+	if result.RowsAffected == 0 {
+		c.JSON(http.StatusNotFound, gin.H{"error": "Привычка с таким ID не найдена"})
 		return
 	}
 

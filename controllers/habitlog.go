@@ -103,7 +103,7 @@ func DeleteHabitLog(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"message": "Лог удален"})
 }
 
-// --- Admin routes ---
+//Admin
 
 func GetAllHabitLogs(c *gin.Context) {
 	var logs []models.HabitLog

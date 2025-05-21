@@ -38,7 +38,7 @@ func UpdateUser(c *gin.Context) {
 		c.JSON(http.StatusNotFound, gin.H{"error": "Пользователь не найден"})
 		return
 	}
-	
+
 	var input models.User
 	if err := c.ShouldBindJSON(&input); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -47,6 +47,11 @@ func UpdateUser(c *gin.Context) {
 
 	user.Name = input.Name
 	user.Email = input.Email
+
+	if input.Email == "" {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Email не может быть пустым"})
+		return
+	}
 
 	if input.Password != "" {
 		hash, err := bcrypt.GenerateFromPassword([]byte(input.Password), bcrypt.DefaultCost)
@@ -68,8 +73,14 @@ func UpdateUser(c *gin.Context) {
 func DeleteUser(c *gin.Context) {
 	userID := c.MustGet("userID").(uint)
 
-	if err := config.DB.Delete(&models.User{}, userID).Error; err != nil {
+	result := config.DB.Delete(&models.User{}, userID)
+	if result.Error != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Ошибка удаления пользователя"})
+		return
+	}
+
+	if result.RowsAffected == 0 {
+		c.JSON(http.StatusNotFound, gin.H{"error": "Пользователь не найден"})
 		return
 	}
 
@@ -81,6 +92,11 @@ func RegisterUser(c *gin.Context) {
 
 	if err := c.ShouldBindJSON(&user); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	if user.Email == "" || len(user.Password) < 6 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Email не должен быть пустым!,пароль минимум 6 символов!"})
 		return
 	}
 
@@ -164,6 +180,11 @@ func UpdateUserByAdmin(c *gin.Context) {
 	user.Email = input.Email
 	user.Role = input.Role
 
+	if input.Email == "" {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Email не может быть пустым"})
+		return
+	}
+
 	if input.Password != "" {
 		hash, err := bcrypt.GenerateFromPassword([]byte(input.Password), bcrypt.DefaultCost)
 		if err != nil {
@@ -183,7 +204,14 @@ func UpdateUserByAdmin(c *gin.Context) {
 
 func DeleteUserByAdmin(c *gin.Context) {
 	id := c.Param("id")
-	if err := config.DB.Delete(&models.User{}, id).Error; err != nil {
+	result := config.DB.Delete(&models.User{}, id)
+
+	if result.Error != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Ошибка удаления пользователя"})
+		return
+	}
+
+	if result.RowsAffected == 0 {
 		c.JSON(http.StatusNotFound, gin.H{"error": "Пользователь не найден"})
 		return
 	}
