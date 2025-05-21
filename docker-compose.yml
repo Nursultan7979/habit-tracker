@@ -28,5 +28,17 @@ services:
     restart: on-failure
     command: sh -c "sleep 10 && ./habit-tracker"
 
+  migrate:
+    image: migrate/migrate
+    volumes:
+      - ./db/migrations:/migrations
+    command: [
+      "-path", "/migrations",
+      "-database", "postgres://postgres:123456kz@db:5432/habit_tracker?sslmode=disable",
+      "up"
+    ]
+    depends_on:
+      - db
+
 volumes:
   db_data:
